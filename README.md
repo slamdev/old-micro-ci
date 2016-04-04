@@ -1,4 +1,4 @@
-# PROJECT-NAME
+# Micro-CI
 
 Tehnologies stack:
 * [Java 8](http://www.oracle.com/technetwork/java/javase/downloads/jdk8-downloads-2133151.html)
@@ -26,7 +26,7 @@ Infrastructure stack:
 
 ### Step-by-step
 1. Open idea and select **Checkout from Version Control** -> **GitHub**
-2. Set Git Repository URL to **REPOSITORY-URL**
+2. Set Git Repository URL to **git@github.com:slamdev/micro-ci.git**
 3. Press **Clone**
 4. In the **Import project** window select **Import project from the external project model** and press **Next**
 5. In the **Import Project** window leave all default options and press **Finish**
@@ -39,7 +39,7 @@ Infrastructure stack:
 
 ## Project run
 There are two ways to run project from idea:
-* Using gradle springboot plugin:
+* Using gradle spring-boot plugin:
   1. Select **View** -> **Tool windows** -> **Gradle** menu item
   2. In the appeared **Gradle projects** window select **:backend** -> **Tasks** -> **application** -> **bootRun**
   3. Open http://localhost:8080/ in the browser window

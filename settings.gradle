@@ -1,4 +1,4 @@
-rootProject.name = 'starter'
+rootProject.name = 'micro-ci'
 include 'backend'
 include 'frontend'
 
