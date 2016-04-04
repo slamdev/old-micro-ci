@@ -31,6 +31,8 @@ gulp.task('clean', function () {
     return gulp.src(build, {read: false}).pipe(plugins.clean());
 });
 
-gulp.task('default', ['clean', 'css', 'js'], function () {
-    gulp.start('index')
+gulp.task('default', ['clean'], function () {
+    gulp.start('css');
+    gulp.start('js');
+    gulp.start('index');
 });

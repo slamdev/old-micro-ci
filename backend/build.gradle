@@ -70,6 +70,7 @@ dependencies {
     testCompile 'org.springframework.boot:spring-boot-starter-test'
     testCompile 'org.mockito:mockito-core'
     e2eTestCompile 'org.seleniumhq.selenium:selenium-java:2.53.0'
+    e2eTestCompile 'org.seleniumhq.selenium:htmlunit-driver:2.20'
     e2eTestCompile 'io.github.bonigarcia:webdrivermanager:1.4.1'
 }
 
