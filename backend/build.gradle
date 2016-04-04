@@ -21,7 +21,7 @@ plugins {
     id 'checkstyle'
     id 'io.spring.dependency-management' version '0.5.6.RELEASE'
     id 'com.gorylenko.gradle-git-properties' version '1.4.15'
-    id 'org.hidetake.ssh' version '1.4.0'
+    id 'org.hidetake.ssh' version '2.0.0'
     id 'com.ofg.uptodate' version '1.6.2'
 }
 
@@ -69,7 +69,7 @@ dependencies {
     // optional 'org.springframework.boot:spring-boot-devtools'
     testCompile 'org.springframework.boot:spring-boot-starter-test'
     testCompile 'org.mockito:mockito-core'
-    e2eTestCompile 'org.seleniumhq.selenium:selenium-java:2.52.0'
+    e2eTestCompile 'org.seleniumhq.selenium:selenium-java:2.53.0'
     e2eTestCompile 'io.github.bonigarcia:webdrivermanager:1.4.1'
 }
 
