@@ -1,0 +1,31 @@
+import org.gradle.profile.BuildProfile
+import org.gradle.profile.ProfileReportRenderer
+import org.gradle.profile.ReportGeneratingProfileListener
+
+import java.time.Instant
+
+plugins {
+    id 'base'
+    id 'idea'
+}
+
+group 'com.github.slamdev'
+version '1.0.0-SNAPSHOT'
+
+ext {
+    gradleWrapperVersion = project.gradleWrapperVersion
+    timestamp = Instant.now().toEpochMilli()
+    buildNumber = '' // TODO: should be passed by CI, eg. getenv('GO_PIPELINE_COUNTER')
+}
+
+task wrapper(type: Wrapper) {
+    gradleVersion = gradleWrapperVersion
+}
+
+gradle.addBuildListener(new ReportGeneratingProfileListener() {
+    void buildFinished(BuildProfile buildProfile) {
+        ProfileReportRenderer renderer = new ProfileReportRenderer()
+        File file = file("${rootProject.buildDir}/reports/profile/profile.html")
+        renderer.writeTo(buildProfile, file)
+    }
+})

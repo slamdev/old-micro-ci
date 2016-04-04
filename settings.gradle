@@ -1,0 +1,4 @@
+rootProject.name = 'starter'
+include 'backend'
+include 'frontend'
+

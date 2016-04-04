@@ -1,0 +1,45 @@
+sourceSets {
+    integrationTest {
+        java {
+            compileClasspath += main.output + test.output
+            runtimeClasspath += main.output + test.output
+            srcDir file('src/integrationTest/java')
+        }
+        resources.srcDir file('src/integrationTest/resources')
+    }
+    e2eTest {
+        java {
+            compileClasspath += main.output + test.output
+            runtimeClasspath += main.output + test.output
+            srcDir file('src/e2eTest/java')
+        }
+        resources.srcDir file('src/e2eTest/resources')
+    }
+}
+
+configurations {
+    integrationTestCompile.extendsFrom testCompile
+    integrationTestRuntime.extendsFrom testRuntime
+    e2eTestCompile.extendsFrom testCompile
+    e2eTestRuntime.extendsFrom testRuntime
+}
+
+task integrationTest(type: Test) {
+    testClassesDir = sourceSets.integrationTest.output.classesDir
+    classpath = sourceSets.integrationTest.runtimeClasspath
+}
+
+task e2eTest(type: Test) {
+    testClassesDir = sourceSets.e2eTest.output.classesDir
+    classpath = sourceSets.e2eTest.runtimeClasspath
+}
+
+check.dependsOn integrationTest
+check.dependsOn e2eTest
+
+integrationTest.mustRunAfter test
+e2eTest.mustRunAfter test
+
+tasks.withType(Test) {
+    reports.html.destination = file("${reporting.baseDir}/${name}")
+}

@@ -1,0 +1,47 @@
+plugins {
+    id 'base'
+    id 'idea'
+    id 'com.moowork.node' version '0.12'
+    id 'com.moowork.gulp' version '0.12'
+}
+
+ext {
+    cacheDir = gradle.gradleUserHomeDir
+    println cacheDir
+}
+
+node {
+    download = true
+    version = '5.10.0'
+    npmVersion = '3.8.5'
+}
+
+task cleanNpmDependencies(type: Delete) {
+    delete 'node_modules'
+}
+
+task npmCacheConfig(type: NpmTask) {
+    description = 'Configure the NPM prefix'
+    String npmCacheDir = "${cacheDir}/caches/npm"
+    outputs.files file(npmCacheDir)
+    args = ['config', 'set', 'cache', npmCacheDir]
+}
+
+task npmPackages(type: NpmTask, dependsOn: npmCacheConfig) {
+    description = 'Install Node.js packages'
+    args = ['install']
+    inputs.file file('package.json')
+    outputs.dir file('node_modules')
+}
+
+task gulpClean(type: GulpTask, dependsOn: installGulp) {
+    args = ['clean', '--force']
+}
+
+task gulpAssemble(type: GulpTask, dependsOn: installGulp) {
+    args = ['default', '--force']
+}
+
+installGulp.dependsOn npmPackages
+assemble.dependsOn gulpAssemble
+clean.dependsOn gulpClean
