@@ -39,4 +39,9 @@ public class ProjectController {
     public Project get(Long id) {
         return projects.stream().filter(p -> p.getId().equals(id)).findAny().orElse(null);
     }
+
+    public void delete(Long id) {
+        Project project = get(id);
+        projects.remove(project);
+    }
 }

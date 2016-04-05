@@ -8,7 +8,7 @@ import static org.junit.Assert.*;
 
 public class ProjectControllerTest {
 
-    private static final String VALID_URL = "git@github.com:Nitka/lighthouse.git";
+    private static final String VALID_URL = "git@github.com:slamdev/micro-ci.git";
 
     private ProjectController controller;
 
@@ -32,8 +32,8 @@ public class ProjectControllerTest {
     @Test
     public void should_parse_project_name_owner_and_host_from_ssh_url() {
         Project project = controller.create(VALID_URL);
-        assertEquals("lighthouse", project.getName());
-        assertEquals("Nitka", project.getOwner());
+        assertEquals("micro-ci", project.getName());
+        assertEquals("slamdev", project.getOwner());
         assertEquals("github.com", project.getHost());
     }
 
@@ -60,5 +60,12 @@ public class ProjectControllerTest {
     public void should_error_if_project_already_exists() {
         controller.create(VALID_URL);
         controller.create(VALID_URL);
+    }
+
+    @Test
+    public void should_delete_project_by_id() {
+        Project project = controller.create(VALID_URL);
+        controller.delete(project.getId());
+        assertNull(controller.get(project.getId()));
     }
 }
