@@ -4,6 +4,10 @@ import java.util.function.Supplier;
 
 public final class LazySupplier {
 
+    private LazySupplier() {
+        // Utility class
+    }
+
     public static <T> Supplier<T> lazily(Supplier<T> supplier) {
         return new Supplier<T>() {
             private T value;
@@ -16,9 +20,5 @@ public final class LazySupplier {
                 return value;
             }
         };
-    }
-
-    private LazySupplier() {
-        // Utility class
     }
 }
