@@ -28,6 +28,8 @@ public class JobControllerTest {
 
     private static final Resource RESOURCE_STUB = new InMemoryResource("");
 
+    private static final Job JOB_STUB = new Job("stub");
+
     @Mock
     private ProjectController projectController;
 
@@ -45,7 +47,7 @@ public class JobControllerTest {
         long projectId = 1L;
         when(projectController.get(projectId)).thenReturn(PROJECT_STUB);
         when(jobDescriptorFetcher.get(PROJECT_STUB)).thenReturn(RESOURCE_STUB);
-        when(jobsBuilder.build(RESOURCE_STUB)).thenReturn(singletonList(new Job()));
+        when(jobsBuilder.build(RESOURCE_STUB)).thenReturn(singletonList(JOB_STUB));
         List<Job> jobs = controller.create(projectId);
         notEmpty(jobs);
     }

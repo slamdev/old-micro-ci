@@ -10,6 +10,7 @@
             <Bug code="MRC"/>
             <Bug code="UP"/>
             <Bug code="UTAO"/>
+            <Bug code="EXS"/>
         </Or>
     </Match>
 </FindBugsFilter>
