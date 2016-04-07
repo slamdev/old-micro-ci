@@ -15,7 +15,8 @@ import org.springframework.security.util.InMemoryResource;
 import java.util.List;
 
 import static java.util.Collections.singletonList;
-import static org.junit.Assert.assertNull;
+import static org.junit.Assert.*;
+import static org.mockito.Matchers.any;
 import static org.mockito.Matchers.anyLong;
 import static org.mockito.Mockito.when;
 import static org.springframework.util.Assert.notEmpty;
@@ -46,8 +47,7 @@ public class JobControllerTest {
     public void should_create_jobs_by_project() {
         long projectId = 1L;
         when(projectController.get(projectId)).thenReturn(PROJECT_STUB);
-        when(jobDescriptorFetcher.get(PROJECT_STUB)).thenReturn(RESOURCE_STUB);
-        when(jobsBuilder.build(RESOURCE_STUB)).thenReturn(singletonList(JOB_STUB));
+        when(jobsBuilder.build(any())).thenReturn(singletonList(JOB_STUB));
         List<Job> jobs = controller.create(projectId);
         notEmpty(jobs);
     }
@@ -82,5 +82,23 @@ public class JobControllerTest {
         when(jobDescriptorFetcher.get(PROJECT_STUB)).thenReturn(null);
         Resource descriptor = controller.getDescriptor(projectId);
         assertNull(descriptor);
+    }
+
+    @Test
+    public void should_return_created_jobs() {
+        long projectId = 1L;
+        when(projectController.get(projectId)).thenReturn(PROJECT_STUB);
+        when(jobsBuilder.build(any())).thenReturn(singletonList(JOB_STUB));
+        List<Job> expected = controller.create(projectId);
+        List<Job> actual = controller.get(projectId);
+        assertEquals(expected, actual);
+    }
+
+    @Test
+    public void should_return_empty_list_if_no_jobs() {
+        long projectId = 1L;
+        when(projectController.get(projectId)).thenReturn(PROJECT_STUB);
+        List<Job> jobs = controller.get(projectId);
+        assertTrue(jobs.isEmpty());
     }
 }
