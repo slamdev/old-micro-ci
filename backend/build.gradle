@@ -64,6 +64,7 @@ dependencies {
     compile 'org.springframework.boot:spring-boot-starter-web'
     compile 'org.springframework.boot:spring-boot-starter-security'
     compile 'org.springframework.boot:spring-boot-starter-actuator'
+    compile 'org.zeroturnaround:zt-exec:1.8'
     optional 'org.springframework.boot:spring-boot-configuration-processor'
     // TODO: find the best way for reloading, either springloaded or devtools
     // optional 'org.springframework.boot:spring-boot-devtools'
