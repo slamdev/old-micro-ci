@@ -10,6 +10,7 @@ import java.io.IOException;
 import java.util.List;
 import java.util.Map;
 
+import static java.util.Collections.emptyList;
 import static java.util.Objects.requireNonNull;
 import static java.util.stream.Collectors.toList;
 import static java.util.stream.StreamSupport.stream;
@@ -27,7 +28,7 @@ public class JobsBuilder {
     }
 
     private Job convert(Object o) {
-        Job job = new Job("");
+        Job job = new Job("", emptyList());
         ConfigurablePropertyAccessor accessor = PropertyAccessorFactory.forDirectFieldAccess(job);
 //        accessor.setAutoGrowNestedPaths(true);
         accessor.setPropertyValues((Map<?, ?>) o);

@@ -1,6 +1,6 @@
 package com.github.slamdev.microci.business.executor.boundary;
 
-import com.github.slamdev.microci.business.executor.entity.ExecutionResult;
+import com.github.slamdev.microci.business.executor.entity.JobExecutionResult;
 import com.github.slamdev.microci.business.job.boundary.JobController;
 import com.github.slamdev.microci.business.job.boundary.JobNotFound;
 import com.github.slamdev.microci.business.job.entity.Job;
@@ -11,6 +11,7 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 
+import static java.util.Collections.emptyList;
 import static java.util.Collections.singletonList;
 import static org.junit.Assert.assertNotNull;
 import static org.mockito.Mockito.when;
@@ -18,7 +19,7 @@ import static org.mockito.Mockito.when;
 @RunWith(MockitoJUnitRunner.class)
 public class ExecutorControllerTest {
 
-    private static final Job JOB_STUB = new Job("job-name");
+    private static final Job JOB_STUB = new Job("job-name", emptyList());
 
     @InjectMocks
     private ExecutorController controller;
@@ -33,8 +34,8 @@ public class ExecutorControllerTest {
     public void should_execute_job_by_name() {
         long projectId = 1L;
         when(jobController.get(projectId)).thenReturn(singletonList(JOB_STUB));
-        when(jobExecutor.execute(JOB_STUB)).thenReturn(new ExecutionResult());
-        ExecutionResult result = controller.execute(projectId, JOB_STUB.getName());
+        when(jobExecutor.execute(JOB_STUB)).thenReturn(new JobExecutionResult(emptyList()));
+        JobExecutionResult result = controller.execute(projectId, JOB_STUB.getName());
         assertNotNull(result);
     }
 

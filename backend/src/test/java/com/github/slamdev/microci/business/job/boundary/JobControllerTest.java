@@ -14,6 +14,7 @@ import org.springframework.security.util.InMemoryResource;
 
 import java.util.List;
 
+import static java.util.Collections.emptyList;
 import static java.util.Collections.singletonList;
 import static org.junit.Assert.*;
 import static org.mockito.Matchers.any;
@@ -29,7 +30,7 @@ public class JobControllerTest {
 
     private static final Resource RESOURCE_STUB = new InMemoryResource("");
 
-    private static final Job JOB_STUB = new Job("stub");
+    private static final Job JOB_STUB = new Job("stub", emptyList());
 
     @Mock
     private ProjectController projectController;

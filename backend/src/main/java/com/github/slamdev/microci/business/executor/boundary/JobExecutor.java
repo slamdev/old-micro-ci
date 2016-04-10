@@ -1,20 +1,39 @@
 package com.github.slamdev.microci.business.executor.boundary;
 
-import com.github.slamdev.microci.business.executor.entity.ExecutionResult;
+import com.github.slamdev.microci.business.executor.entity.JobExecutionResult;
+import com.github.slamdev.microci.business.executor.entity.TaskExecutionResult;
 import com.github.slamdev.microci.business.job.entity.Job;
-import org.zeroturnaround.exec.ProcessExecutor;
+import com.github.slamdev.microci.business.job.entity.Task;
+import org.springframework.beans.factory.annotation.Autowired;
 
-import java.io.IOException;
-import java.util.concurrent.TimeoutException;
+import java.util.ArrayList;
+import java.util.List;
+
+import static com.github.slamdev.microci.business.executor.entity.TaskExecutionResult.Status.FAILED;
+import static com.github.slamdev.microci.business.executor.entity.TaskExecutionResult.Status.SKIPPED;
+import static java.util.Objects.requireNonNull;
 
 public class JobExecutor {
 
-    public ExecutionResult execute(Job job) {
-        try {
-            new ProcessExecutor().command("ping", "-n", "6", "127.0.0.1").execute();
-        } catch (IOException | InterruptedException | TimeoutException e) {
-            throw new IllegalArgumentException(e);
+    @Autowired
+    private TaskExecutor taskExecutor;
+
+    @SuppressWarnings({"PMD.DataflowAnomalyAnalysis", "PMD.AvoidInstantiatingObjectsInLoops"} /* TODO: refactor*/)
+    public JobExecutionResult execute(Job job) {
+        requireNonNull(job);
+        List<TaskExecutionResult> results = new ArrayList<>();
+        boolean failed = false;
+        for (Task task : job.getTasks()) {
+            if (failed) {
+                results.add(new TaskExecutionResult(SKIPPED));
+            } else {
+                TaskExecutionResult result = taskExecutor.execute(task);
+                if (result.getStatus() == FAILED) {
+                    failed = true;
+                }
+                results.add(result);
+            }
         }
-        return null;
+        return new JobExecutionResult(results);
     }
 }
