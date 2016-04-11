@@ -34,7 +34,7 @@ public class ExecutorControllerTest {
     public void should_execute_job_by_name() {
         long projectId = 1L;
         when(jobController.get(projectId)).thenReturn(singletonList(JOB_STUB));
-        when(jobExecutor.execute(JOB_STUB)).thenReturn(new JobExecutionResult(emptyList()));
+        when(jobExecutor.execute(JOB_STUB)).thenReturn(new JobExecutionResult(emptyList(), false));
         JobExecutionResult result = controller.execute(projectId, JOB_STUB.getName());
         assertNotNull(result);
     }

@@ -3,37 +3,36 @@ package com.github.slamdev.microci.business.executor.boundary;
 import com.github.slamdev.microci.business.executor.entity.JobExecutionResult;
 import com.github.slamdev.microci.business.executor.entity.TaskExecutionResult;
 import com.github.slamdev.microci.business.job.entity.Job;
-import com.github.slamdev.microci.business.job.entity.Task;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 import static com.github.slamdev.microci.business.executor.entity.TaskExecutionResult.Status.FAILED;
 import static com.github.slamdev.microci.business.executor.entity.TaskExecutionResult.Status.SKIPPED;
 import static java.util.Objects.requireNonNull;
+import static java.util.stream.Collectors.toList;
 
 public class JobExecutor {
 
     @Autowired
     private TaskExecutor taskExecutor;
 
-    @SuppressWarnings({"PMD.DataflowAnomalyAnalysis", "PMD.AvoidInstantiatingObjectsInLoops"} /* TODO: refactor*/)
+    @SuppressWarnings("PMD.DataflowAnomalyAnalysis" /* does not take into account lambda */)
     public JobExecutionResult execute(Job job) {
         requireNonNull(job);
-        List<TaskExecutionResult> results = new ArrayList<>();
-        boolean failed = false;
-        for (Task task : job.getTasks()) {
-            if (failed) {
-                results.add(new TaskExecutionResult(SKIPPED));
+        final AtomicBoolean failed = new AtomicBoolean();
+        List<TaskExecutionResult> results = job.getTasks().stream().map(task -> {
+            if (failed.get()) {
+                return new TaskExecutionResult(SKIPPED);
             } else {
                 TaskExecutionResult result = taskExecutor.execute(task);
                 if (result.getStatus() == FAILED) {
-                    failed = true;
+                    failed.set(true);
                 }
-                results.add(result);
+                return result;
             }
-        }
-        return new JobExecutionResult(results);
+        }).collect(toList());
+        return new JobExecutionResult(results, failed.get());
     }
 }
