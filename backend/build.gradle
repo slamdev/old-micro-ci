@@ -34,11 +34,12 @@ apply from: 'gradle/extendedTests.gradle'
 
 sourceCompatibility = 1.8
 
-sourceSets {
-    main {
-        resources.srcDir project(':frontend').buildDir
-    }
-}
+// TODO: enable when start working on client side
+//sourceSets {
+//    main {
+//        resources.srcDir project(':frontend').buildDir
+//    }
+//}
 
 gitProperties {
     keys = [
@@ -75,6 +76,6 @@ dependencies {
     e2eTestCompile 'io.github.bonigarcia:webdrivermanager:1.4.1'
 }
 
-compileJava.dependsOn(processResources)
-
-processResources.dependsOn tasks.getByPath(':frontend:assemble')
+// TODO: enable when start working on client side
+//compileJava.dependsOn(processResources)
+//processResources.dependsOn tasks.getByPath(':frontend:assemble')
