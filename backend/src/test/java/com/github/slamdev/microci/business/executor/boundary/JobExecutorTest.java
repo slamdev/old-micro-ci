@@ -19,7 +19,7 @@ import static org.mockito.Mockito.when;
 @RunWith(MockitoJUnitRunner.class)
 public class JobExecutorTest {
 
-    private static final Job JOB_STUB = new Job("job-name", asList(new Task(), new Task()));
+    private static final Job JOB_STUB = new Job("job-name", asList(new Task(""), new Task("")));
 
     private static final TaskExecutionResult SUCCESS_STUB = new TaskExecutionResult(SUCCESS);
 
