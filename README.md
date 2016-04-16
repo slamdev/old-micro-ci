@@ -5,9 +5,6 @@ Tehnologies stack:
 * [Gradle 2.12](https://docs.gradle.org/current/userguide/userguide.html) - project build system
 * [Spring 4.2.5](http://docs.spring.io/spring/docs/current/spring-framework-reference/html/) - main framework for server side
 
-Infrastructure stack:
-* [Tomcat 8.32](http://tomcat.apache.org/tomcat-8.0-doc/index.html) - application container
-
 ## Development workflow
 [GitHub Flow](https://guides.github.com/introduction/flow/) is used on this project:
 * each task should be done in separate branch
