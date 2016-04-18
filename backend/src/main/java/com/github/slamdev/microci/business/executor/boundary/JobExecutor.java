@@ -1,6 +1,6 @@
 package com.github.slamdev.microci.business.executor.boundary;
 
-import com.github.slamdev.microci.business.executor.entity.JobExecutionResult;
+import com.github.slamdev.microci.business.executor.entity.Build;
 import com.github.slamdev.microci.business.executor.entity.TaskExecutionResult;
 import com.github.slamdev.microci.business.job.entity.Job;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,7 +19,7 @@ public class JobExecutor {
     private TaskExecutor taskExecutor;
 
     @SuppressWarnings("PMD.DataflowAnomalyAnalysis" /* does not take into account lambda */)
-    public JobExecutionResult execute(Job job) {
+    public Build execute(Job job) {
         requireNonNull(job);
         final AtomicBoolean failed = new AtomicBoolean();
         List<TaskExecutionResult> results = job.getTasks().stream().map(task -> {
@@ -33,6 +33,6 @@ public class JobExecutor {
                 return result;
             }
         }).collect(toList());
-        return new JobExecutionResult(results, failed.get());
+        return new Build(results, failed.get());
     }
 }

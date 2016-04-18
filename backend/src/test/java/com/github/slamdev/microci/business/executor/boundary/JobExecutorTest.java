@@ -1,6 +1,6 @@
 package com.github.slamdev.microci.business.executor.boundary;
 
-import com.github.slamdev.microci.business.executor.entity.JobExecutionResult;
+import com.github.slamdev.microci.business.executor.entity.Build;
 import com.github.slamdev.microci.business.executor.entity.TaskExecutionResult;
 import com.github.slamdev.microci.business.job.entity.Job;
 import com.github.slamdev.microci.business.job.entity.Task;
@@ -34,7 +34,7 @@ public class JobExecutorTest {
     @Test
     public void should_execute_all_tasks_in_job() {
         when(taskExecutor.execute(any())).thenReturn(SUCCESS_STUB);
-        JobExecutionResult result = executor.execute(JOB_STUB);
+        Build result = executor.execute(JOB_STUB);
         result.getTaskResults().forEach(task -> assertEquals(SUCCESS, task.getStatus()));
         assertFalse(result.isJobFailed());
     }
@@ -42,7 +42,7 @@ public class JobExecutorTest {
     @Test
     public void should_not_execute_descending_tasks_if_one_failed() {
         when(taskExecutor.execute(any())).thenReturn(FAILED_STUB);
-        JobExecutionResult result = executor.execute(JOB_STUB);
+        Build result = executor.execute(JOB_STUB);
         assertEquals(FAILED, result.getTaskResults().get(0).getStatus());
         result.getTaskResults().stream().skip(1).forEach(task -> assertEquals(SKIPPED, task.getStatus()));
         assertTrue(result.isJobFailed());

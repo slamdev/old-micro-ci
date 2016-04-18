@@ -7,7 +7,6 @@ plugins {
 
 ext {
     cacheDir = gradle.gradleUserHomeDir
-    println cacheDir
 }
 
 node {

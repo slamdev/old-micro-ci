@@ -1,6 +1,6 @@
 package com.github.slamdev.microci.business.executor.boundary;
 
-import com.github.slamdev.microci.business.executor.entity.JobExecutionResult;
+import com.github.slamdev.microci.business.executor.entity.Build;
 import com.github.slamdev.microci.business.job.boundary.JobController;
 import com.github.slamdev.microci.business.job.boundary.JobNotFound;
 import com.github.slamdev.microci.business.job.entity.Job;
@@ -16,9 +16,14 @@ public class ExecutorController {
     @Autowired
     private JobExecutor jobExecutor;
 
-    public JobExecutionResult execute(long projectId, String jobName) {
+    @Autowired
+    private BuildRepository buildRepository;
+
+    public Build execute(long projectId, String jobName) {
         List<Job> jobs = jobController.get(projectId);
         Job job = jobs.stream().filter(j -> j.getName().equals(jobName)).findAny().orElseThrow(JobNotFound::new);
-        return jobExecutor.execute(job);
+        Build build = jobExecutor.execute(job);
+        buildRepository.save(build);
+        return build;
     }
 }
