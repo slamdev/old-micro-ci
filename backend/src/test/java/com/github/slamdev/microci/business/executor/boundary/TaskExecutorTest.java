@@ -2,6 +2,7 @@ package com.github.slamdev.microci.business.executor.boundary;
 
 import com.github.slamdev.microci.business.executor.entity.TaskExecutionResult;
 import com.github.slamdev.microci.business.job.entity.Task;
+import com.github.slamdev.microci.business.log.boundary.LogController;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -14,8 +15,9 @@ import org.zeroturnaround.exec.ProcessExecutor;
 import static com.github.slamdev.microci.business.executor.entity.TaskExecutionResult.Status.FAILED;
 import static com.github.slamdev.microci.business.executor.entity.TaskExecutionResult.Status.SUCCESS;
 import static org.junit.Assert.assertEquals;
+import static org.mockito.Matchers.any;
 import static org.mockito.Matchers.anyString;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
 @RunWith(MockitoJUnitRunner.class)
 public class TaskExecutorTest {
@@ -28,9 +30,13 @@ public class TaskExecutorTest {
     @Mock
     private ProcessExecutor processExecutor;
 
+    @Mock
+    private LogController logController;
+
     @Before
     public void setUp() {
         when(processExecutor.command(anyString())).thenReturn(processExecutor);
+        when(processExecutor.redirectOutput(any())).thenReturn(processExecutor);
         when(processExecutor.exitValueNormal()).thenReturn(processExecutor);
     }
 
@@ -46,5 +52,11 @@ public class TaskExecutorTest {
         when(processExecutor.execute()).thenThrow(InvalidExitValueException.class);
         TaskExecutionResult result = executor.execute(TASK_STUB);
         assertEquals(FAILED, result.getStatus());
+    }
+
+    @Test
+    public void should_write_execution_log() {
+        executor.execute(TASK_STUB);
+        verify(logController, times(1)).write(any(), any());
     }
 }
