@@ -1,7 +1,7 @@
 package com.github.slamdev.microci.business.job.boundary;
 
 import com.github.slamdev.microci.business.project.entity.Project;
-import com.github.slamdev.microci.business.repository.boundary.RepositoryFetcher;
+import com.github.slamdev.microci.business.repository.boundary.RepositoryAccessor;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
@@ -25,14 +25,14 @@ public class JobDescriptorFetcherTest {
     private static final Resource RESOURCE_STUB = new InMemoryResource("");
 
     @Mock
-    private RepositoryFetcher repositoryFetcher;
+    private RepositoryAccessor repositoryAccessor;
 
     @InjectMocks
     private JobDescriptorFetcher fetcher;
 
     @Test
     public void should_return_descriptor() {
-        when(repositoryFetcher.getResource(PROJECT_STUB, DESCRIPTOR_NAME)).thenReturn(RESOURCE_STUB);
+        when(repositoryAccessor.getResource(PROJECT_STUB, DESCRIPTOR_NAME)).thenReturn(RESOURCE_STUB);
         Resource descriptor = fetcher.get(PROJECT_STUB);
         assertNotNull(descriptor);
     }
@@ -44,7 +44,7 @@ public class JobDescriptorFetcherTest {
 
     @Test
     public void should_return_null_if_no_descriptor() {
-        when(repositoryFetcher.getResource(PROJECT_STUB, eq(anyString()))).thenReturn(null);
+        when(repositoryAccessor.getResource(PROJECT_STUB, eq(anyString()))).thenReturn(null);
         Resource descriptor = fetcher.get(PROJECT_STUB);
         assertNull(descriptor);
     }
