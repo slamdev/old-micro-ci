@@ -5,7 +5,7 @@ import java.io.OutputStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
 
-public class LogController {
+public class LogWriter {
 
     private static final String LOG_FILENAME = "build.log";
 

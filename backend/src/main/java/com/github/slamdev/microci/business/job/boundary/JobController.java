@@ -1,8 +1,8 @@
 package com.github.slamdev.microci.business.job.boundary;
 
 import com.github.slamdev.microci.business.job.entity.Job;
-import com.github.slamdev.microci.business.project.boundary.ProjectController;
 import com.github.slamdev.microci.business.project.boundary.ProjectNotFoundException;
+import com.github.slamdev.microci.business.project.boundary.ProjectRepository;
 import com.github.slamdev.microci.business.project.entity.Project;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.Resource;
@@ -19,7 +19,7 @@ public class JobController {
     private final Map<Project, List<Job>> projectJobs = new HashMap<>();
 
     @Autowired
-    private ProjectController projectController;
+    private ProjectRepository projectRepository;
 
     @Autowired
     private JobDescriptorFetcher descriptorFetcher;
@@ -41,7 +41,7 @@ public class JobController {
     }
 
     private Project acquireProject(long projectId) {
-        Project project = projectController.get(projectId);
+        Project project = projectRepository.get(projectId);
         if (project == null) {
             throw new ProjectNotFoundException(valueOf(projectId));
         }

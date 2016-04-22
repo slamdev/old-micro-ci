@@ -12,6 +12,7 @@
             <Bug code="UP"/>
             <Bug code="UTAO"/>
             <Bug code="EXS"/>
+            <Bug code="NAB"/>
         </Or>
     </Match>
 </FindBugsFilter>

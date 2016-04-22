@@ -2,7 +2,7 @@ package com.github.slamdev.microci.business.executor.boundary;
 
 import com.github.slamdev.microci.business.executor.entity.TaskExecutionResult;
 import com.github.slamdev.microci.business.job.entity.Task;
-import com.github.slamdev.microci.business.log.boundary.LogController;
+import com.github.slamdev.microci.business.log.boundary.LogWriter;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -31,7 +31,7 @@ public class TaskExecutorTest {
     private ProcessExecutor processExecutor;
 
     @Mock
-    private LogController logController;
+    private LogWriter logWriter;
 
     @Before
     public void setUp() {
@@ -57,6 +57,6 @@ public class TaskExecutorTest {
     @Test
     public void should_write_execution_log() {
         executor.execute(TASK_STUB);
-        verify(logController, times(1)).write(any(), any());
+        verify(logWriter, times(1)).write(any(), any());
     }
 }

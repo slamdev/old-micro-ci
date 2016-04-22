@@ -1,8 +1,8 @@
 package com.github.slamdev.microci.business.job.boundary;
 
 import com.github.slamdev.microci.business.job.entity.Job;
-import com.github.slamdev.microci.business.project.boundary.ProjectController;
 import com.github.slamdev.microci.business.project.boundary.ProjectNotFoundException;
+import com.github.slamdev.microci.business.project.boundary.ProjectRepository;
 import com.github.slamdev.microci.business.project.entity.Project;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -33,7 +33,7 @@ public class JobControllerTest {
     private static final Job JOB_STUB = new Job("stub", emptyList());
 
     @Mock
-    private ProjectController projectController;
+    private ProjectRepository projectRepository;
 
     @Mock
     private JobsBuilder jobsBuilder;
@@ -47,7 +47,7 @@ public class JobControllerTest {
     @Test
     public void should_create_jobs_by_project() {
         long projectId = 1L;
-        when(projectController.get(projectId)).thenReturn(PROJECT_STUB);
+        when(projectRepository.get(projectId)).thenReturn(PROJECT_STUB);
         when(jobsBuilder.build(any())).thenReturn(singletonList(JOB_STUB));
         List<Job> jobs = controller.create(projectId);
         notEmpty(jobs);
@@ -55,7 +55,7 @@ public class JobControllerTest {
 
     @Test(expected = ProjectNotFoundException.class)
     public void should_error_if_project_not_exists() {
-        when(projectController.get(anyLong())).thenReturn(null);
+        when(projectRepository.get(anyLong())).thenReturn(null);
         long projectId = 0L;
         controller.create(projectId);
     }
@@ -63,7 +63,7 @@ public class JobControllerTest {
     @Test
     public void should_return_jobs_descriptor() {
         long projectId = 1L;
-        when(projectController.get(projectId)).thenReturn(PROJECT_STUB);
+        when(projectRepository.get(projectId)).thenReturn(PROJECT_STUB);
         when(jobDescriptorFetcher.get(PROJECT_STUB)).thenReturn(RESOURCE_STUB);
         Resource descriptor = controller.getDescriptor(projectId);
         notNull(descriptor);
@@ -71,7 +71,7 @@ public class JobControllerTest {
 
     @Test(expected = ProjectNotFoundException.class)
     public void should_error_if_project_not_exists_for_descriptor() {
-        when(projectController.get(anyLong())).thenReturn(null);
+        when(projectRepository.get(anyLong())).thenReturn(null);
         long projectId = 0L;
         controller.getDescriptor(projectId);
     }
@@ -79,7 +79,7 @@ public class JobControllerTest {
     @Test
     public void should_return_null_if_project_without_descriptor() {
         long projectId = 1L;
-        when(projectController.get(projectId)).thenReturn(PROJECT_STUB);
+        when(projectRepository.get(projectId)).thenReturn(PROJECT_STUB);
         when(jobDescriptorFetcher.get(PROJECT_STUB)).thenReturn(null);
         Resource descriptor = controller.getDescriptor(projectId);
         assertNull(descriptor);
@@ -88,7 +88,7 @@ public class JobControllerTest {
     @Test
     public void should_return_created_jobs() {
         long projectId = 1L;
-        when(projectController.get(projectId)).thenReturn(PROJECT_STUB);
+        when(projectRepository.get(projectId)).thenReturn(PROJECT_STUB);
         when(jobsBuilder.build(any())).thenReturn(singletonList(JOB_STUB));
         List<Job> expected = controller.create(projectId);
         List<Job> actual = controller.get(projectId);
@@ -98,7 +98,7 @@ public class JobControllerTest {
     @Test
     public void should_return_empty_list_if_no_jobs() {
         long projectId = 1L;
-        when(projectController.get(projectId)).thenReturn(PROJECT_STUB);
+        when(projectRepository.get(projectId)).thenReturn(PROJECT_STUB);
         List<Job> jobs = controller.get(projectId);
         assertTrue(jobs.isEmpty());
     }

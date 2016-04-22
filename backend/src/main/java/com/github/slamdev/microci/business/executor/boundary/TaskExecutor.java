@@ -2,7 +2,7 @@ package com.github.slamdev.microci.business.executor.boundary;
 
 import com.github.slamdev.microci.business.executor.entity.TaskExecutionResult;
 import com.github.slamdev.microci.business.job.entity.Task;
-import com.github.slamdev.microci.business.log.boundary.LogController;
+import com.github.slamdev.microci.business.log.boundary.LogWriter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,7 +26,7 @@ public class TaskExecutor {
     private ProcessExecutor processExecutor;
 
     @Autowired
-    private LogController logController;
+    private LogWriter logWriter;
 
     public TaskExecutionResult execute(Task task) {
         OutputStream stream = new ByteArrayOutputStream();
@@ -36,7 +36,7 @@ public class TaskExecutor {
             LOGGER.error("", e);
             return new TaskExecutionResult(FAILED);
         }
-        logController.write(stream, Paths.get(""));
+        logWriter.write(stream, Paths.get(""));
         return new TaskExecutionResult(SUCCESS);
     }
 }
