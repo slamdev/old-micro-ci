@@ -9,7 +9,7 @@ public class BranchInfo {
     public final long allBuildsCount;
     public final List<BuildInfo> lastBuilds;
 
-    private BranchInfo(String name, long allBuildsCount, List<BuildInfo> lastBuilds) {
+    BranchInfo(String name, long allBuildsCount, List<BuildInfo> lastBuilds) {
         this.name = name;
         this.allBuildsCount = allBuildsCount;
         this.lastBuilds = unmodifiableList(lastBuilds);

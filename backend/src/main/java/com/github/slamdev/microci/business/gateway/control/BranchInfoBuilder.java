@@ -8,7 +8,7 @@ import java.util.List;
 @Component
 public class BranchInfoBuilder {
 
-    public List<BranchInfo> buildAll(long jobId) {
+    public List<BranchInfo> buildAll(String jobName) {
         return null;
     }
 }

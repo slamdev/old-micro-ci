@@ -10,7 +10,7 @@ public class BuildInfo {
     public final CommitInfo commit;
     public final List<TaskInfo> tasks;
 
-    private BuildInfo(JobInfo job, Status status, CommitInfo commit, List<TaskInfo> tasks) {
+    BuildInfo(JobInfo job, Status status, CommitInfo commit, List<TaskInfo> tasks) {
         this.job = job;
         this.status = status;
         this.commit = commit;

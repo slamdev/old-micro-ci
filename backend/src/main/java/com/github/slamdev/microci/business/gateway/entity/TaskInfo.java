@@ -10,7 +10,7 @@ public class TaskInfo {
     public final long durationInMillis;
     public final Status status;
 
-    private TaskInfo(String name, boolean allowFailure, Instant finishedDate, long logId, long durationInMillis, Status status) {
+    TaskInfo(String name, boolean allowFailure, Instant finishedDate, long logId, long durationInMillis, Status status) {
         this.name = name;
         this.allowFailure = allowFailure;
         this.finishedDate = finishedDate;

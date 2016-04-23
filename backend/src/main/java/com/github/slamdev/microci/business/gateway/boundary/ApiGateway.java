@@ -39,12 +39,12 @@ public class ApiGateway {
     }
 
     @RequestMapping(path = "/job/{name}/build", method = GET)
-    public List<BuildInfo> getBuilds(@PathVariable String jobName) {
+    public List<BuildInfo> getBuilds(@PathVariable("name") String jobName) {
         return buildBuilder.buildAll(jobName);
     }
 
     @RequestMapping(path = "/job/{name}/branch", method = GET)
-    public List<BranchInfo> getBranches(@PathVariable long jobId) {
-        return branchBuilder.buildAll(jobId);
+    public List<BranchInfo> getBranches(@PathVariable("name") String jobName) {
+        return branchBuilder.buildAll(jobName);
     }
 }

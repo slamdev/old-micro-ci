@@ -9,7 +9,7 @@ public class JobInfo {
     public final int buildNumber;
     public final Status status;
 
-    private JobInfo(String name, long durationInMillis, Instant finishedDate, int buildNumber, Status status) {
+    JobInfo(String name, long durationInMillis, Instant finishedDate, int buildNumber, Status status) {
         this.name = name;
         this.durationInMillis = durationInMillis;
         this.finishedDate = finishedDate;

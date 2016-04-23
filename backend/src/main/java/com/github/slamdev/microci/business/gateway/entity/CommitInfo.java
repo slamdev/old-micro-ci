@@ -7,7 +7,7 @@ public class CommitInfo {
     public final String branch;
     public final String message;
 
-    private CommitInfo(String commitSHA, String authorEmail, String authorName, String branch, String message) {
+    CommitInfo(String commitSHA, String authorEmail, String authorName, String branch, String message) {
         this.commitSHA = commitSHA;
         this.authorEmail = authorEmail;
         this.authorName = authorName;
