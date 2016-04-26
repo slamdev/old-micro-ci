@@ -26,11 +26,11 @@ import static org.springframework.util.Assert.notNull;
 @RunWith(MockitoJUnitRunner.class)
 public class JobControllerTest {
 
-    private static final Project PROJECT_STUB = new Project(1L, "host", "owner", "name");
+    private static final Project PROJECT_STUB = Project.builder().id(1L).host("host").owner("owner").name("name").build();
 
     private static final Resource RESOURCE_STUB = new InMemoryResource("");
 
-    private static final Job JOB_STUB = new Job("stub", emptyList());
+    private static final Job JOB_STUB = Job.builder().name("stub").tasks(emptyList()).build();
 
     @Mock
     private ProjectRepository projectRepository;

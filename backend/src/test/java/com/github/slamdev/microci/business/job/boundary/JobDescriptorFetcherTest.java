@@ -20,7 +20,7 @@ import static org.mockito.Mockito.when;
 @RunWith(MockitoJUnitRunner.class)
 public class JobDescriptorFetcherTest {
 
-    private static final Project PROJECT_STUB = new Project(1L, "host", "owner", "name");
+    private static final Project PROJECT_STUB = Project.builder().id(1L).host("host").owner("owner").name("name").build();
 
     private static final Resource RESOURCE_STUB = new InMemoryResource("");
 

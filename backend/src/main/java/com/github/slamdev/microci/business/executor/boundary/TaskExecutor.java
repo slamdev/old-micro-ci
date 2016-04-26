@@ -15,8 +15,8 @@ import java.io.OutputStream;
 import java.nio.file.Paths;
 import java.util.concurrent.TimeoutException;
 
-import static com.github.slamdev.microci.business.executor.entity.TaskExecutionResult.Status.FAILED;
-import static com.github.slamdev.microci.business.executor.entity.TaskExecutionResult.Status.SUCCESS;
+import static com.github.slamdev.microci.business.gateway.entity.Status.FAILURE;
+import static com.github.slamdev.microci.business.gateway.entity.Status.SUCCESS;
 
 public class TaskExecutor {
 
@@ -34,9 +34,9 @@ public class TaskExecutor {
             processExecutor.command(task.getCommand()).redirectOutput(stream).exitValueNormal().execute();
         } catch (IOException | InterruptedException | TimeoutException | InvalidExitValueException e) {
             LOGGER.error("", e);
-            return new TaskExecutionResult(FAILED);
+            return TaskExecutionResult.builder().status(FAILURE).build();
         }
         logWriter.write(stream, Paths.get(""));
-        return new TaskExecutionResult(SUCCESS);
+        return TaskExecutionResult.builder().status(SUCCESS).build();
     }
 }

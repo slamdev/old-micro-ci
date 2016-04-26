@@ -39,13 +39,13 @@ public class ApiGatewayTest {
 
     private static final String STUB_JOB_NAME = "my-job";
 
-    private static final JobInfo JOB_STUB = new JobInfo.Builder()
-            .setName("some-job")
-            .setDurationInMillis(2)
-            .setFinishedDate(ofEpochSecond(1))
-            .setBuildNumber(3)
-            .setStatus(SUCCESS)
-            .createJobInfo();
+    private static final JobInfo JOB_STUB = JobInfo.builder()
+            .name("some-job")
+            .durationInMillis(2)
+            .finishedDate(ofEpochSecond(1))
+            .buildNumber(3)
+            .status(SUCCESS)
+            .build();
 
     private static final JSONObject JOB_JSON = new JSONObject()
             .put("name", "some-job")
@@ -54,13 +54,13 @@ public class ApiGatewayTest {
             .put("buildNumber", 3)
             .put("status", "SUCCESS");
 
-    private static final CommitInfo COMMIT_STUB = new CommitInfo.Builder()
-            .setCommitSHA("sha")
-            .setAuthorEmail("email")
-            .setAuthorName("author")
-            .setBranch("branch")
-            .setMessage("msg")
-            .createCommitInfo();
+    private static final CommitInfo COMMIT_STUB = CommitInfo.builder()
+            .commitSHA("sha")
+            .authorEmail("email")
+            .authorName("author")
+            .branch("branch")
+            .message("msg")
+            .build();
 
     private static final JSONObject COMMIT_JSON = new JSONObject()
             .put("commitSHA", "sha")
@@ -69,14 +69,14 @@ public class ApiGatewayTest {
             .put("branch", "branch")
             .put("message", "msg");
 
-    private static final TaskInfo TASK_STUB = new TaskInfo.Builder()
-            .setAllowFailure(true)
-            .setDurationInMillis(1)
-            .setFinishedDate(ofEpochSecond(2))
-            .setLogId(3)
-            .setName("some name")
-            .setStatus(SUCCESS)
-            .createTaskInfo();
+    private static final TaskInfo TASK_STUB = TaskInfo.builder()
+            .allowFailure(true)
+            .durationInMillis(1)
+            .finishedDate(ofEpochSecond(2))
+            .logId(3)
+            .name("some name")
+            .status(SUCCESS)
+            .build();
 
     private static final JSONObject TASK_JSON = new JSONObject()
             .put("name", "some name")
@@ -86,12 +86,12 @@ public class ApiGatewayTest {
             .put("durationInMillis", 1)
             .put("status", "SUCCESS");
 
-    private static final BuildInfo BUILD_STUB = new BuildInfo.Builder()
-            .setCommit(COMMIT_STUB)
-            .setJob(JOB_STUB)
-            .setStatus(SUCCESS)
-            .setTasks(singletonList(TASK_STUB))
-            .createBuildInfo();
+    private static final BuildInfo BUILD_STUB = BuildInfo.builder()
+            .commit(COMMIT_STUB)
+            .job(JOB_STUB)
+            .status(SUCCESS)
+            .tasks(singletonList(TASK_STUB))
+            .build();
 
     private static final JSONObject BUILD_JSON = new JSONObject()
             .put("commit", COMMIT_JSON)
@@ -99,12 +99,11 @@ public class ApiGatewayTest {
             .put("status", "SUCCESS")
             .put("tasks", new JSONArray(singletonList(TASK_JSON)));
 
-
-    private static final BranchInfo BRANCH_STUB = new BranchInfo.Builder()
-            .setAllBuildsCount(1)
-            .setLastBuilds(singletonList(BUILD_STUB))
-            .setName("some-name")
-            .createBranchInfo();
+    private static final BranchInfo BRANCH_STUB = BranchInfo.builder()
+            .allBuildsCount(1)
+            .lastBuilds(singletonList(BUILD_STUB))
+            .name("some-name")
+            .build();
 
     private static final JSONObject BRANCH_JSON = new JSONObject()
             .put("allBuildsCount", 1)

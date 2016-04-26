@@ -19,9 +19,9 @@ import static org.mockito.Mockito.*;
 @RunWith(MockitoJUnitRunner.class)
 public class ExecutorControllerTest {
 
-    private static final Job JOB_STUB = new Job("job-name", emptyList());
+    private static final Job JOB_STUB = Job.builder().name("job-name").tasks(emptyList()).build();
 
-    private static final Build BUILD_STUB = new Build(emptyList(), false);
+    private static final Build BUILD_STUB = Build.builder().build();
 
     @InjectMocks
     private ExecutorController controller;

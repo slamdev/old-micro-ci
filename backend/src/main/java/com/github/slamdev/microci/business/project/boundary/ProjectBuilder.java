@@ -20,7 +20,7 @@ public class ProjectBuilder {
         String host = parts[0].split("@")[1];
         String owner = parts[1].split("/")[0];
         String name = parts[1].split("/")[1].replace(".git", "");
-        return new Project(1L, host, owner, name);
+        return Project.builder().id(1L).host(host).owner(owner).name(name).build();
     }
 
     private String trimSshPrefix(String url) {

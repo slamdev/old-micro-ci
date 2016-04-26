@@ -28,7 +28,7 @@ public class JobsBuilder {
     }
 
     private Job convert(Object o) {
-        Job job = new Job("", emptyList());
+        Job job = Job.builder().build();
         ConfigurablePropertyAccessor accessor = PropertyAccessorFactory.forDirectFieldAccess(job);
 //        accessor.setAutoGrowNestedPaths(true);
         accessor.setPropertyValues((Map<?, ?>) o);

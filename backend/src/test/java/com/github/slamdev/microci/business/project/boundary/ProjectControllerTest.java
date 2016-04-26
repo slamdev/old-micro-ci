@@ -13,7 +13,7 @@ import static org.mockito.Mockito.*;
 @RunWith(MockitoJUnitRunner.class)
 public class ProjectControllerTest {
 
-    private static final Project PROJECT_STUB = new Project(1L, "host", "owner", "name");
+    private static final Project PROJECT_STUB = Project.builder().id(1L).host("host").owner("owner").name("name").build();
 
     private static final String URL_STUB = "git@github.com:slamdev/micro-ci.git";
 

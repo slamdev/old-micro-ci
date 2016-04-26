@@ -1,24 +1,11 @@
 package com.github.slamdev.microci.business.executor.entity;
 
-import static com.github.slamdev.microci.business.executor.entity.TaskExecutionResult.Status.SKIPPED;
+import com.github.slamdev.microci.business.gateway.entity.Status;
+import lombok.Builder;
+import lombok.Data;
 
+@Builder
+@Data
 public class TaskExecutionResult {
-
     private final Status status;
-
-    public TaskExecutionResult(Status status) {
-        this.status = status;
-    }
-
-    public TaskExecutionResult() {
-        status = SKIPPED;
-    }
-
-    public Status getStatus() {
-        return status;
-    }
-
-    public enum Status {
-        SUCCESS, FAILED, SKIPPED;
-    }
 }

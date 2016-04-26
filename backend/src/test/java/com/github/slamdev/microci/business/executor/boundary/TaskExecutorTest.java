@@ -12,8 +12,8 @@ import org.mockito.runners.MockitoJUnitRunner;
 import org.zeroturnaround.exec.InvalidExitValueException;
 import org.zeroturnaround.exec.ProcessExecutor;
 
-import static com.github.slamdev.microci.business.executor.entity.TaskExecutionResult.Status.FAILED;
-import static com.github.slamdev.microci.business.executor.entity.TaskExecutionResult.Status.SUCCESS;
+import static com.github.slamdev.microci.business.gateway.entity.Status.FAILURE;
+import static com.github.slamdev.microci.business.gateway.entity.Status.SUCCESS;
 import static org.junit.Assert.assertEquals;
 import static org.mockito.Matchers.any;
 import static org.mockito.Matchers.anyString;
@@ -22,7 +22,7 @@ import static org.mockito.Mockito.*;
 @RunWith(MockitoJUnitRunner.class)
 public class TaskExecutorTest {
 
-    private static final Task TASK_STUB = new Task("");
+    private static final Task TASK_STUB = Task.builder().build();
 
     @InjectMocks
     private TaskExecutor executor;
@@ -51,7 +51,7 @@ public class TaskExecutorTest {
     public void should_return_fail_result_if_execution_not_ok() throws Exception {
         when(processExecutor.execute()).thenThrow(InvalidExitValueException.class);
         TaskExecutionResult result = executor.execute(TASK_STUB);
-        assertEquals(FAILED, result.getStatus());
+        assertEquals(FAILURE, result.getStatus());
     }
 
     @Test

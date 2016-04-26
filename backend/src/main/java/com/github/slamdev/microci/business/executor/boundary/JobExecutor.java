@@ -8,8 +8,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicBoolean;
 
-import static com.github.slamdev.microci.business.executor.entity.TaskExecutionResult.Status.FAILED;
-import static com.github.slamdev.microci.business.executor.entity.TaskExecutionResult.Status.SKIPPED;
+import static com.github.slamdev.microci.business.gateway.entity.Status.FAILURE;
+import static com.github.slamdev.microci.business.gateway.entity.Status.SKIPPED;
 import static java.util.Objects.requireNonNull;
 import static java.util.stream.Collectors.toList;
 
@@ -24,15 +24,15 @@ public class JobExecutor {
         final AtomicBoolean failed = new AtomicBoolean();
         List<TaskExecutionResult> results = job.getTasks().stream().map(task -> {
             if (failed.get()) {
-                return new TaskExecutionResult(SKIPPED);
+                return TaskExecutionResult.builder().status(SKIPPED).build();
             } else {
                 TaskExecutionResult result = taskExecutor.execute(task);
-                if (result.getStatus() == FAILED) {
+                if (result.getStatus() == FAILURE) {
                     failed.set(true);
                 }
                 return result;
             }
         }).collect(toList());
-        return new Build(results, failed.get());
+        return Build.builder().taskResults(results).build();
     }
 }
