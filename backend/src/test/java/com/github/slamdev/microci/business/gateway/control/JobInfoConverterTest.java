@@ -19,11 +19,11 @@ public class JobInfoConverterTest {
                 .finishedDate(ofEpochMilli(11))
                 .jobName("some-job")
                 .build();
-        JobInfo job = new JobInfoConverter().convert(build);
-        assertEquals(SUCCESS, job.getStatus());
-        assertEquals("some-job", job.getName());
-        assertEquals(1, job.getBuildNumber());
-        assertEquals(10, job.getDurationInMillis());
-        assertEquals(ofEpochMilli(11), job.getFinishedDate());
+        JobInfo info = new JobInfoConverter().convert(build);
+        assertEquals(SUCCESS, info.getStatus());
+        assertEquals("some-job", info.getName());
+        assertEquals(1, info.getBuildNumber());
+        assertEquals(10, info.getDurationInMillis());
+        assertEquals(ofEpochMilli(11), info.getFinishedDate());
     }
 }

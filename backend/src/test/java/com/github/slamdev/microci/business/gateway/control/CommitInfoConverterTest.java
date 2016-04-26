@@ -17,11 +17,11 @@ public class CommitInfoConverterTest {
                 .commitSHA("123")
                 .commitMessage("fix")
                 .build();
-        CommitInfo commit = new CommitInfoConverter().convert(build);
-        assertEquals("some@email.com", commit.getAuthorEmail());
-        assertEquals("joe", commit.getAuthorName());
-        assertEquals("master", commit.getBranch());
-        assertEquals("123", commit.getCommitSHA());
-        assertEquals("fix", commit.getMessage());
+        CommitInfo info = new CommitInfoConverter().convert(build);
+        assertEquals("some@email.com", info.getAuthorEmail());
+        assertEquals("joe", info.getAuthorName());
+        assertEquals("master", info.getBranch());
+        assertEquals("123", info.getCommitSHA());
+        assertEquals("fix", info.getMessage());
     }
 }

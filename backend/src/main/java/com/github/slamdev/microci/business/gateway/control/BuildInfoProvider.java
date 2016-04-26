@@ -13,7 +13,7 @@ import java.util.List;
 public class BuildInfoProvider {
 
     @Autowired
-    private BuildRepository buildRepository;
+    private BuildRepository repository;
 
     @Autowired
     private JobInfoConverter jobInfoConverter;
@@ -26,8 +26,8 @@ public class BuildInfoProvider {
 
     @Cacheable(BuildRepository.CACHE_NAME)
     public BuildInfo getLast(String jobName) {
-        Build build = buildRepository.findTopByJobNameOrderByFinishedDate(jobName);
-        return convert(build);
+        Build build = repository.findTopByJobNameOrderByFinishedDate(jobName);
+        return build == null ? null : convert(build);
     }
 
     private BuildInfo convert(Build build) {

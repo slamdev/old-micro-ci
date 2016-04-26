@@ -25,12 +25,12 @@ public class TasksInfoConverterTest {
                 .finishedDate(ofEpochMilli(11))
                 .build();
         Build build = Build.builder().taskResults(singletonList(task)).build();
-        List<TaskInfo> tasks = new TasksInfoConverter().convert(build);
-        assertEquals(1, tasks.size());
-        assertEquals(10, tasks.get(0).getDurationInMillis());
-        assertEquals(ofEpochMilli(11), tasks.get(0).getFinishedDate());
-        assertEquals(1, tasks.get(0).getLogId());
-        assertEquals("some-name", tasks.get(0).getName());
-        assertEquals(SUCCESS, tasks.get(0).getStatus());
+        List<TaskInfo> infos = new TasksInfoConverter().convert(build);
+        assertEquals(1, infos.size());
+        assertEquals(10, infos.get(0).getDurationInMillis());
+        assertEquals(ofEpochMilli(11), infos.get(0).getFinishedDate());
+        assertEquals(1, infos.get(0).getLogId());
+        assertEquals("some-name", infos.get(0).getName());
+        assertEquals(SUCCESS, infos.get(0).getStatus());
     }
 }
