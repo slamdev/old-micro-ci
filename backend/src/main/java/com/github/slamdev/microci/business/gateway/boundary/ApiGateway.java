@@ -1,7 +1,7 @@
 package com.github.slamdev.microci.business.gateway.boundary;
 
-import com.github.slamdev.microci.business.gateway.control.BranchInfoBuilder;
-import com.github.slamdev.microci.business.gateway.control.BuildInfoBuilder;
+import com.github.slamdev.microci.business.gateway.control.BranchInfoProvider;
+import com.github.slamdev.microci.business.gateway.control.BuildInfoProvider;
 import com.github.slamdev.microci.business.gateway.control.JobInfoProvider;
 import com.github.slamdev.microci.business.gateway.entity.BranchInfo;
 import com.github.slamdev.microci.business.gateway.entity.BuildInfo;
@@ -23,10 +23,10 @@ public class ApiGateway {
     private JobInfoProvider jobBuilder;
 
     @Autowired
-    private BuildInfoBuilder buildBuilder;
+    private BuildInfoProvider buildBuilder;
 
     @Autowired
-    private BranchInfoBuilder branchBuilder;
+    private BranchInfoProvider branchBuilder;
 
     @RequestMapping(path = "/job", method = GET)
     public List<JobInfo> getJobs() {
@@ -35,12 +35,12 @@ public class ApiGateway {
 
     @RequestMapping(path = "/job/{name}/build/last", method = GET)
     public BuildInfo getLastBuild(@PathVariable("name") String jobName) {
-        return buildBuilder.buildLast(jobName);
+        return buildBuilder.getLast(jobName);
     }
 
     @RequestMapping(path = "/job/{name}/build", method = GET)
     public List<BuildInfo> getBuilds(@PathVariable("name") String jobName) {
-        return buildBuilder.buildAll(jobName);
+        return buildBuilder.getAll(jobName);
     }
 
     @RequestMapping(path = "/job/{name}/branch", method = GET)

@@ -1,8 +1,8 @@
 package com.github.slamdev.microci.business.gateway.boundary;
 
 import com.github.slamdev.microci.Application;
-import com.github.slamdev.microci.business.gateway.control.BranchInfoBuilder;
-import com.github.slamdev.microci.business.gateway.control.BuildInfoBuilder;
+import com.github.slamdev.microci.business.gateway.control.BranchInfoProvider;
+import com.github.slamdev.microci.business.gateway.control.BuildInfoProvider;
 import com.github.slamdev.microci.business.gateway.control.JobInfoProvider;
 import com.github.slamdev.microci.business.gateway.entity.*;
 import org.json.JSONArray;
@@ -117,10 +117,10 @@ public class ApiGatewayTest {
     private JobInfoProvider jobBuilder;
 
     @Autowired
-    private BranchInfoBuilder branchBuilder;
+    private BranchInfoProvider branchBuilder;
 
     @Autowired
-    private BuildInfoBuilder buildBuilder;
+    private BuildInfoProvider buildBuilder;
 
     private MockMvc mvc;
 
@@ -142,23 +142,23 @@ public class ApiGatewayTest {
 
     @Test
     public void should_return_correct_json_when_requesting_last_build() throws Exception {
-        when(buildBuilder.buildLast(STUB_JOB_NAME)).thenReturn(BUILD_STUB);
+        when(buildBuilder.getLast(STUB_JOB_NAME)).thenReturn(BUILD_STUB);
         String expected = BUILD_JSON.toString();
         mvc.perform(get("/api/job/{name}/build/last", STUB_JOB_NAME))
                 .andExpect(status().isOk())
                 .andExpect(content().json(expected));
-        verify(buildBuilder, times(1)).buildLast(STUB_JOB_NAME);
+        verify(buildBuilder, times(1)).getLast(STUB_JOB_NAME);
         verifyNoMoreInteractions(buildBuilder);
     }
 
     @Test
     public void should_return_correct_json_when_requesting_builds() throws Exception {
-        when(buildBuilder.buildAll(STUB_JOB_NAME)).thenReturn(singletonList(BUILD_STUB));
+        when(buildBuilder.getAll(STUB_JOB_NAME)).thenReturn(singletonList(BUILD_STUB));
         String expected = new JSONArray(singletonList(BUILD_JSON)).toString();
         mvc.perform(get("/api/job/{name}/build", STUB_JOB_NAME))
                 .andExpect(status().isOk())
                 .andExpect(content().json(expected));
-        verify(buildBuilder, times(1)).buildAll(STUB_JOB_NAME);
+        verify(buildBuilder, times(1)).getAll(STUB_JOB_NAME);
         verifyNoMoreInteractions(buildBuilder);
     }
 
@@ -185,14 +185,14 @@ public class ApiGatewayTest {
 
         @Bean
         @Primary
-        BranchInfoBuilder branchInfoBuilder() {
-            return mock(BranchInfoBuilder.class);
+        BranchInfoProvider branchInfoBuilder() {
+            return mock(BranchInfoProvider.class);
         }
 
         @Bean
         @Primary
-        BuildInfoBuilder buildInfoBuilder() {
-            return mock(BuildInfoBuilder.class);
+        BuildInfoProvider buildInfoBuilder() {
+            return mock(BuildInfoProvider.class);
         }
     }
 }

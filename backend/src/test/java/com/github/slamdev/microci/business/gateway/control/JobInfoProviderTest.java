@@ -13,8 +13,6 @@ import org.mockito.runners.MockitoJUnitRunner;
 
 import java.util.List;
 
-import static com.github.slamdev.microci.business.gateway.entity.Status.SUCCESS;
-import static java.time.Instant.ofEpochMilli;
 import static java.util.Collections.singletonList;
 import static org.junit.Assert.assertEquals;
 import static org.mockito.Mockito.when;
@@ -35,24 +33,16 @@ public class JobInfoProviderTest {
     @Mock
     private JobRepository jobRepository;
 
+    @Mock
+    private JobInfoConverter jobInfoConverter;
+
     @Test
     public void should_build_list_of_all_jobs() {
         when(jobRepository.findAll()).thenReturn(singletonList(JOB_STUB));
-        Build build = Build.builder()
-                .status(SUCCESS)
-                .number(1)
-                .startDate(ofEpochMilli(1))
-                .finishedDate(ofEpochMilli(11))
-                .jobName(JOB_NAME)
-                .build();
+        Build build = Build.builder().build();
         when(buildRepository.findTopByJobNameOrderByFinishedDate(JOB_NAME)).thenReturn(build);
         List<JobInfo> jobs = provider.get();
         assertEquals(1, jobs.size());
-        assertEquals(SUCCESS, jobs.get(0).getStatus());
-        assertEquals(JOB_NAME, jobs.get(0).getName());
-        assertEquals(1, jobs.get(0).getBuildNumber());
-        assertEquals(10, jobs.get(0).getDurationInMillis());
-        assertEquals(ofEpochMilli(11), jobs.get(0).getFinishedDate());
     }
 
     @Test

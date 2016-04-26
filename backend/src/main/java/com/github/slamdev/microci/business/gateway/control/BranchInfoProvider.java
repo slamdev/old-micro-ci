@@ -6,7 +6,7 @@ import org.springframework.stereotype.Component;
 import java.util.List;
 
 @Component
-public class BranchInfoBuilder {
+public class BranchInfoProvider {
 
     public List<BranchInfo> buildAll(String jobName) {
         return null;

@@ -9,7 +9,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Component;
 
-import java.time.Duration;
 import java.util.List;
 
 import static java.util.stream.Collectors.toList;
@@ -23,6 +22,9 @@ public class JobInfoProvider {
     @Autowired
     private JobRepository jobRepository;
 
+    @Autowired
+    private JobInfoConverter converter;
+
     @Cacheable({JobRepository.CACHE_NAME, BuildRepository.CACHE_NAME})
     public List<JobInfo> get() {
         List<Job> jobs = jobRepository.findAll();
@@ -31,21 +33,9 @@ public class JobInfoProvider {
 
     private JobInfo convert(Job job) {
         Build build = buildRepository.findTopByJobNameOrderByFinishedDate(job.getName());
-        return convert(job, build);
-    }
-
-    private JobInfo convert(Job job, Build build) {
-        JobInfo.JobInfoBuilder builder = JobInfo.builder().name(job.getName());
-        if (build != null) {
-            builder.status(build.getStatus())
-                    .buildNumber(build.getNumber())
-                    .finishedDate(build.getFinishedDate())
-                    .durationInMillis(calculateDuration(build));
+        if (build == null) {
+            return JobInfo.builder().name(job.getName()).build();
         }
-        return builder.build();
-    }
-
-    private long calculateDuration(Build build) {
-        return Duration.between(build.getStartDate(), build.getFinishedDate()).toMillis();
+        return converter.convert(build);
     }
 }

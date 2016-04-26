@@ -15,5 +15,10 @@ public class Build {
     private final int number;
     private final Instant finishedDate;
     private final String jobName;
-    private final Instant startDate;
+    private final Instant startedDate;
+    private final String commitSHA;
+    private final String authorEmail;
+    private final String authorName;
+    private final String branch;
+    private final String commitMessage;
 }
