@@ -1,0 +1,51 @@
+package com.github.slamdev.microci.business.gateway.control;
+
+import com.github.slamdev.microci.business.executor.boundary.BuildRepository;
+import com.github.slamdev.microci.business.executor.entity.Build;
+import com.github.slamdev.microci.business.gateway.entity.JobInfo;
+import com.github.slamdev.microci.business.job.boundary.JobRepository;
+import com.github.slamdev.microci.business.job.entity.Job;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.Cacheable;
+import org.springframework.stereotype.Component;
+
+import java.time.Duration;
+import java.util.List;
+
+import static java.util.stream.Collectors.toList;
+
+@Component
+public class JobInfoProvider {
+
+    @Autowired
+    private BuildRepository buildRepository;
+
+    @Autowired
+    private JobRepository jobRepository;
+
+    @Cacheable({JobRepository.CACHE_NAME, BuildRepository.CACHE_NAME})
+    public List<JobInfo> get() {
+        List<Job> jobs = jobRepository.findAll();
+        return jobs.stream().map(this::convert).collect(toList());
+    }
+
+    private JobInfo convert(Job job) {
+        Build build = buildRepository.findTopByJobNameOrderByFinishedDate(job.getName());
+        return convert(job, build);
+    }
+
+    private JobInfo convert(Job job, Build build) {
+        JobInfo.JobInfoBuilder builder = JobInfo.builder().name(job.getName());
+        if (build != null) {
+            builder.status(build.getStatus())
+                    .buildNumber(build.getNumber())
+                    .finishedDate(build.getFinishedDate())
+                    .durationInMillis(calculateDuration(build));
+        }
+        return builder.build();
+    }
+
+    private long calculateDuration(Build build) {
+        return Duration.between(build.getStartDate(), build.getFinishedDate()).toMillis();
+    }
+}

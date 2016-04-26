@@ -3,7 +3,7 @@ package com.github.slamdev.microci.business.gateway.boundary;
 import com.github.slamdev.microci.Application;
 import com.github.slamdev.microci.business.gateway.control.BranchInfoBuilder;
 import com.github.slamdev.microci.business.gateway.control.BuildInfoBuilder;
-import com.github.slamdev.microci.business.gateway.control.JobInfoBuilder;
+import com.github.slamdev.microci.business.gateway.control.JobInfoProvider;
 import com.github.slamdev.microci.business.gateway.entity.*;
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -114,7 +114,7 @@ public class ApiGatewayTest {
     private WebApplicationContext context;
 
     @Autowired
-    private JobInfoBuilder jobBuilder;
+    private JobInfoProvider jobBuilder;
 
     @Autowired
     private BranchInfoBuilder branchBuilder;
@@ -131,12 +131,12 @@ public class ApiGatewayTest {
 
     @Test
     public void should_return_correct_json_when_requesting_all_jobs() throws Exception {
-        when(jobBuilder.buildAll()).thenReturn(singletonList(JOB_STUB));
+        when(jobBuilder.get()).thenReturn(singletonList(JOB_STUB));
         String expected = new JSONArray(singletonList(JOB_JSON)).toString();
         mvc.perform(get("/api/job"))
                 .andExpect(status().isOk())
                 .andExpect(content().json(expected));
-        verify(jobBuilder, times(1)).buildAll();
+        verify(jobBuilder, times(1)).get();
         verifyNoMoreInteractions(jobBuilder);
     }
 
@@ -179,8 +179,8 @@ public class ApiGatewayTest {
 
         @Bean
         @Primary
-        JobInfoBuilder jobInfoBuilder() {
-            return mock(JobInfoBuilder.class);
+        JobInfoProvider jobInfoBuilder() {
+            return mock(JobInfoProvider.class);
         }
 
         @Bean

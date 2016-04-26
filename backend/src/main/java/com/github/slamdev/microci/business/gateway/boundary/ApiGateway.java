@@ -2,7 +2,7 @@ package com.github.slamdev.microci.business.gateway.boundary;
 
 import com.github.slamdev.microci.business.gateway.control.BranchInfoBuilder;
 import com.github.slamdev.microci.business.gateway.control.BuildInfoBuilder;
-import com.github.slamdev.microci.business.gateway.control.JobInfoBuilder;
+import com.github.slamdev.microci.business.gateway.control.JobInfoProvider;
 import com.github.slamdev.microci.business.gateway.entity.BranchInfo;
 import com.github.slamdev.microci.business.gateway.entity.BuildInfo;
 import com.github.slamdev.microci.business.gateway.entity.JobInfo;
@@ -20,7 +20,7 @@ import static org.springframework.web.bind.annotation.RequestMethod.GET;
 public class ApiGateway {
 
     @Autowired
-    private JobInfoBuilder jobBuilder;
+    private JobInfoProvider jobBuilder;
 
     @Autowired
     private BuildInfoBuilder buildBuilder;
@@ -30,7 +30,7 @@ public class ApiGateway {
 
     @RequestMapping(path = "/job", method = GET)
     public List<JobInfo> getJobs() {
-        return jobBuilder.buildAll();
+        return jobBuilder.get();
     }
 
     @RequestMapping(path = "/job/{name}/build/last", method = GET)

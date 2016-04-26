@@ -10,7 +10,6 @@ import java.io.IOException;
 import java.util.List;
 import java.util.Map;
 
-import static java.util.Collections.emptyList;
 import static java.util.Objects.requireNonNull;
 import static java.util.stream.Collectors.toList;
 import static java.util.stream.StreamSupport.stream;
