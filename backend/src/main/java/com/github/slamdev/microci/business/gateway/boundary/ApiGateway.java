@@ -45,6 +45,6 @@ public class ApiGateway {
 
     @RequestMapping(path = "/job/{name}/branch", method = GET)
     public List<BranchInfo> getBranches(@PathVariable("name") String jobName) {
-        return branchBuilder.buildAll(jobName);
+        return branchBuilder.getAll(jobName);
     }
 }

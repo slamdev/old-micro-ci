@@ -14,4 +14,10 @@ public interface BuildRepository {
     Optional<Build> findTopByJobNameOrderByFinishedDate(String jobName);
 
     List<Build> findAll(String jobName);
+
+    List<Build> findAllByJobNameDistinctByBranchOrderByFinishedDate(String jobName);
+
+    long getCountByBranch(String branch);
+
+    List<Build> findAllByBranchOrderByFinishedDateWithLimit(String branch, int limit);
 }

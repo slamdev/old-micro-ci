@@ -164,12 +164,12 @@ public class ApiGatewayTest {
 
     @Test
     public void should_return_correct_json_when_requesting_branches() throws Exception {
-        when(branchBuilder.buildAll(STUB_JOB_NAME)).thenReturn(singletonList(BRANCH_STUB));
+        when(branchBuilder.getAll(STUB_JOB_NAME)).thenReturn(singletonList(BRANCH_STUB));
         String expected = new JSONArray(singletonList(BRANCH_JSON)).toString();
         mvc.perform(get("/api/job/{name}/branch", STUB_JOB_NAME))
                 .andExpect(status().isOk())
                 .andExpect(content().json(expected));
-        verify(branchBuilder, times(1)).buildAll(STUB_JOB_NAME);
+        verify(branchBuilder, times(1)).getAll(STUB_JOB_NAME);
         verifyNoMoreInteractions(branchBuilder);
     }
 
