@@ -9,6 +9,8 @@ import org.springframework.stereotype.Component;
 
 import java.util.List;
 
+import static java.util.stream.Collectors.toList;
+
 @Component
 public class BuildInfoProvider {
 
@@ -26,8 +28,7 @@ public class BuildInfoProvider {
 
     @Cacheable(BuildRepository.CACHE_NAME)
     public BuildInfo getLast(String jobName) {
-        Build build = repository.findTopByJobNameOrderByFinishedDate(jobName);
-        return build == null ? null : convert(build);
+        return repository.findTopByJobNameOrderByFinishedDate(jobName).map(this::convert).orElse(null);
     }
 
     private BuildInfo convert(Build build) {
@@ -40,6 +41,6 @@ public class BuildInfoProvider {
     }
 
     public List<BuildInfo> getAll(String jobName) {
-        return null;
+        return repository.findAll(jobName).stream().map(this::convert).collect(toList());
     }
 }

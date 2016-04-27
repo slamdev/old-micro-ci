@@ -14,6 +14,8 @@ import org.mockito.runners.MockitoJUnitRunner;
 import java.util.List;
 
 import static java.util.Collections.singletonList;
+import static java.util.Optional.empty;
+import static java.util.Optional.of;
 import static org.junit.Assert.assertEquals;
 import static org.mockito.Mockito.when;
 
@@ -40,7 +42,7 @@ public class JobInfoProviderTest {
     public void should_build_list_of_all_jobs() {
         when(jobRepository.findAll()).thenReturn(singletonList(JOB_STUB));
         Build build = Build.builder().build();
-        when(buildRepository.findTopByJobNameOrderByFinishedDate(JOB_NAME)).thenReturn(build);
+        when(buildRepository.findTopByJobNameOrderByFinishedDate(JOB_NAME)).thenReturn(of(build));
         List<JobInfo> infos = provider.get();
         assertEquals(1, infos.size());
     }
@@ -48,7 +50,7 @@ public class JobInfoProviderTest {
     @Test
     public void should_return_empty_job_if_no_build() {
         when(jobRepository.findAll()).thenReturn(singletonList(JOB_STUB));
-        when(buildRepository.findTopByJobNameOrderByFinishedDate(JOB_NAME)).thenReturn(null);
+        when(buildRepository.findTopByJobNameOrderByFinishedDate(JOB_NAME)).thenReturn(empty());
         List<JobInfo> infos = provider.get();
         assertEquals(1, infos.size());
         assertEquals(JOB_NAME, infos.get(0).getName());
