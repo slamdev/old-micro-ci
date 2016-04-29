@@ -1,5 +1,6 @@
 package com.github.slamdev.microci.business.gateway.entity;
 
+import com.github.slamdev.microci.business.executor.entity.Status;
 import lombok.Builder;
 import lombok.Data;
 

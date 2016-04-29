@@ -4,7 +4,7 @@ import com.github.slamdev.microci.business.executor.entity.Build;
 import com.github.slamdev.microci.business.gateway.entity.JobInfo;
 import org.junit.Test;
 
-import static com.github.slamdev.microci.business.gateway.entity.Status.SUCCESS;
+import static com.github.slamdev.microci.business.executor.entity.Status.SUCCESS;
 import static java.time.Instant.ofEpochMilli;
 import static org.junit.Assert.assertEquals;
 

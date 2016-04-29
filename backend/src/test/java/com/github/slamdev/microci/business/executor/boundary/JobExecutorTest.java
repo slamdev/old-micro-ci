@@ -1,8 +1,8 @@
 package com.github.slamdev.microci.business.executor.boundary;
 
 import com.github.slamdev.microci.business.executor.entity.Build;
+import com.github.slamdev.microci.business.executor.entity.Status;
 import com.github.slamdev.microci.business.executor.entity.TaskExecutionResult;
-import com.github.slamdev.microci.business.gateway.entity.Status;
 import com.github.slamdev.microci.business.job.entity.Job;
 import com.github.slamdev.microci.business.job.entity.Task;
 import org.junit.Test;
@@ -11,7 +11,7 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 
-import static com.github.slamdev.microci.business.gateway.entity.Status.*;
+import static com.github.slamdev.microci.business.executor.entity.Status.*;
 import static java.util.Arrays.asList;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;

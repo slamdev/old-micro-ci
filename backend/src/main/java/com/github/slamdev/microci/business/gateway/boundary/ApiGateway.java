@@ -9,6 +9,7 @@ import com.github.slamdev.microci.business.gateway.entity.JobInfo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
@@ -20,31 +21,32 @@ import static org.springframework.web.bind.annotation.RequestMethod.GET;
 public class ApiGateway {
 
     @Autowired
-    private JobInfoProvider jobBuilder;
+    private JobInfoProvider jobProvider;
 
     @Autowired
-    private BuildInfoProvider buildBuilder;
+    private BuildInfoProvider buildProvider;
 
     @Autowired
-    private BranchInfoProvider branchBuilder;
+    private BranchInfoProvider branchProvider;
 
     @RequestMapping(path = "/job", method = GET)
     public List<JobInfo> getJobs() {
-        return jobBuilder.get();
+        return jobProvider.get();
     }
 
     @RequestMapping(path = "/job/{name}/build/last", method = GET)
     public BuildInfo getLastBuild(@PathVariable("name") String jobName) {
-        return buildBuilder.getLast(jobName);
+        return buildProvider.getLast(jobName);
     }
 
     @RequestMapping(path = "/job/{name}/build", method = GET)
     public List<BuildInfo> getBuilds(@PathVariable("name") String jobName) {
-        return buildBuilder.getAll(jobName);
+        return buildProvider.getAll(jobName);
     }
 
     @RequestMapping(path = "/job/{name}/branch", method = GET)
-    public List<BranchInfo> getBranches(@PathVariable("name") String jobName) {
-        return branchBuilder.getAll(jobName);
+    public List<BranchInfo> getBranches(@PathVariable("name") String jobName,
+                                        @RequestParam("buildsCount") int buildsCount) {
+        return branchProvider.getAll(jobName, buildsCount);
     }
 }

@@ -12,8 +12,8 @@ import org.mockito.runners.MockitoJUnitRunner;
 import org.zeroturnaround.exec.InvalidExitValueException;
 import org.zeroturnaround.exec.ProcessExecutor;
 
-import static com.github.slamdev.microci.business.gateway.entity.Status.FAILURE;
-import static com.github.slamdev.microci.business.gateway.entity.Status.SUCCESS;
+import static com.github.slamdev.microci.business.executor.entity.Status.FAILURE;
+import static com.github.slamdev.microci.business.executor.entity.Status.SUCCESS;
 import static org.junit.Assert.assertEquals;
 import static org.mockito.Matchers.any;
 import static org.mockito.Matchers.anyString;

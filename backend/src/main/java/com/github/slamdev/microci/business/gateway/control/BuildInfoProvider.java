@@ -24,6 +24,7 @@ public class BuildInfoProvider {
         return repository.findTopByJobNameOrderByFinishedDate(jobName).map(converter::convert).orElse(null);
     }
 
+    @Cacheable(BuildRepository.CACHE_NAME)
     public List<BuildInfo> getAll(String jobName) {
         return repository.findAll(jobName).stream().map(converter::convert).collect(toList());
     }

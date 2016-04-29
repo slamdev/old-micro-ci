@@ -33,7 +33,7 @@ public class BranchInfoProviderTest {
         when(repository.findAllByJobNameDistinctByBranchOrderByFinishedDate(JOB_NAME)).thenReturn(singletonList(build));
         when(repository.getCountByBranch(BRANCH_NAME)).thenReturn(2L);
         when(repository.findAllByBranchOrderByFinishedDateWithLimit(BRANCH_NAME, 5)).thenReturn(singletonList(build));
-        provider.getAll(JOB_NAME);
+        provider.getAll(JOB_NAME, 5);
         verify(converter, times(1)).convert(singletonList(build), 2);
     }
 }

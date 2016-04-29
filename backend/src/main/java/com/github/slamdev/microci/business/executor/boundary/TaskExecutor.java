@@ -15,8 +15,8 @@ import java.io.OutputStream;
 import java.nio.file.Paths;
 import java.util.concurrent.TimeoutException;
 
-import static com.github.slamdev.microci.business.gateway.entity.Status.FAILURE;
-import static com.github.slamdev.microci.business.gateway.entity.Status.SUCCESS;
+import static com.github.slamdev.microci.business.executor.entity.Status.FAILURE;
+import static com.github.slamdev.microci.business.executor.entity.Status.SUCCESS;
 
 public class TaskExecutor {
 

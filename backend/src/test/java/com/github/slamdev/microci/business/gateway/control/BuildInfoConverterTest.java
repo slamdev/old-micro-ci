@@ -36,6 +36,4 @@ public class BuildInfoConverterTest {
         verify(commitInfoConverter, times(1)).convert(build);
         verify(tasksInfoConverter, times(1)).convert(build);
     }
-
-
 }

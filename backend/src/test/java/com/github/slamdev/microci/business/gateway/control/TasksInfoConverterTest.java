@@ -7,7 +7,7 @@ import org.junit.Test;
 
 import java.util.List;
 
-import static com.github.slamdev.microci.business.gateway.entity.Status.SUCCESS;
+import static com.github.slamdev.microci.business.executor.entity.Status.SUCCESS;
 import static java.time.Instant.ofEpochMilli;
 import static java.util.Collections.singletonList;
 import static org.junit.Assert.assertEquals;

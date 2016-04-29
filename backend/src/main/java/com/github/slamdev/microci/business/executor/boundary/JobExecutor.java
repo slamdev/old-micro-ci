@@ -8,8 +8,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicBoolean;
 
-import static com.github.slamdev.microci.business.gateway.entity.Status.FAILURE;
-import static com.github.slamdev.microci.business.gateway.entity.Status.SKIPPED;
+import static com.github.slamdev.microci.business.executor.entity.Status.FAILURE;
+import static com.github.slamdev.microci.business.executor.entity.Status.SKIPPED;
 import static java.util.Objects.requireNonNull;
 import static java.util.stream.Collectors.toList;
 

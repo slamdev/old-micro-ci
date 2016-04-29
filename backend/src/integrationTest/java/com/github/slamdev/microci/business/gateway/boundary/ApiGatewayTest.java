@@ -22,7 +22,7 @@ import org.springframework.test.context.web.WebAppConfiguration;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.web.context.WebApplicationContext;
 
-import static com.github.slamdev.microci.business.gateway.entity.Status.SUCCESS;
+import static com.github.slamdev.microci.business.executor.entity.Status.SUCCESS;
 import static java.time.Instant.ofEpochSecond;
 import static java.util.Collections.singletonList;
 import static org.mockito.Mockito.*;
@@ -164,12 +164,12 @@ public class ApiGatewayTest {
 
     @Test
     public void should_return_correct_json_when_requesting_branches() throws Exception {
-        when(branchBuilder.getAll(STUB_JOB_NAME)).thenReturn(singletonList(BRANCH_STUB));
+        when(branchBuilder.getAll(STUB_JOB_NAME, 5)).thenReturn(singletonList(BRANCH_STUB));
         String expected = new JSONArray(singletonList(BRANCH_JSON)).toString();
         mvc.perform(get("/api/job/{name}/branch", STUB_JOB_NAME))
                 .andExpect(status().isOk())
                 .andExpect(content().json(expected));
-        verify(branchBuilder, times(1)).getAll(STUB_JOB_NAME);
+        verify(branchBuilder, times(1)).getAll(STUB_JOB_NAME, 5);
         verifyNoMoreInteractions(branchBuilder);
     }
 
