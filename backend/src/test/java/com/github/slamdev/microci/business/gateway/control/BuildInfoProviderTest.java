@@ -49,6 +49,23 @@ public class BuildInfoProviderTest {
     }
 
     @Test
+    public void should_return_build_info() {
+        Build build = Build.builder().build();
+        long buildNumber = 1L;
+        when(repository.findByJobNameAndBuildNumber(JOB_NAME, buildNumber)).thenReturn(of(build));
+        provider.get(JOB_NAME, buildNumber);
+        verify(converter, times(1)).convert(build);
+    }
+
+    @Test
+    public void should_return_null_if_no_build() {
+        long buildNumber = 1L;
+        when(repository.findByJobNameAndBuildNumber(JOB_NAME, buildNumber)).thenReturn(empty());
+        BuildInfo info = provider.get(JOB_NAME, buildNumber);
+        assertNull(info);
+    }
+
+    @Test
     public void should_return_all_build_infos() {
         Build build = Build.builder().build();
         when(repository.findAll(JOB_NAME)).thenReturn(singletonList(build));

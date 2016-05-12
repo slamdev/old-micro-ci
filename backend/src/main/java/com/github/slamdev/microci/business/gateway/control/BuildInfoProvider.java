@@ -28,4 +28,9 @@ public class BuildInfoProvider {
     public List<BuildInfo> getAll(String jobName) {
         return repository.findAll(jobName).stream().map(converter::convert).collect(toList());
     }
+
+    @Cacheable(BuildRepository.CACHE_NAME)
+    public BuildInfo get(String jobName, long buildNumber) {
+        return repository.findByJobNameAndBuildNumber(jobName, buildNumber).map(converter::convert).orElse(null);
+    }
 }

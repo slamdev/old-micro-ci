@@ -20,4 +20,6 @@ public interface BuildRepository {
     long getCountByBranch(String branch);
 
     List<Build> findAllByBranchOrderByFinishedDateWithLimit(String branch, int limit);
+
+    Optional<Build> findByJobNameAndBuildNumber(String jobName, long buildNumber);
 }

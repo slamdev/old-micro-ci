@@ -35,4 +35,8 @@ public class JobExecutor {
         }).collect(toList());
         return Build.builder().taskResults(results).build();
     }
+
+    public long addToQueue(String jobName) {
+        return 0;
+    }
 }
